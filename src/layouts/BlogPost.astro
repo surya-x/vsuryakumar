@@ -5,15 +5,16 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
+import TagBadge from '../components/TagBadge.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags = [] } = Astro.props;
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={`${title} — V Surya Kumar`} description={description} />
 		<style>
 			main {
 				width: calc(100% - 2em);
@@ -26,31 +27,64 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			.hero-image img {
 				display: block;
 				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
+				border-radius: var(--radius-lg);
+				border: 1px solid var(--border);
 			}
 			.prose {
-				width: 720px;
+				width: 760px;
 				max-width: calc(100% - 2em);
 				margin: auto;
 				padding: 1em;
-				color: rgb(var(--gray-dark));
+				color: var(--text-secondary);
 			}
-			.title {
+			.article-header {
+				margin-bottom: 2.5em;
+				padding-bottom: 1.5em;
+				border-bottom: 1px solid var(--border);
+			}
+			.article-header h1 {
+				font-size: 2.5em;
+				margin-bottom: 0.5em;
+				line-height: 1.15;
+				letter-spacing: -0.03em;
+			}
+			.article-meta {
+				display: flex;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 1em;
 				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
 			}
 			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
+				color: var(--text-muted);
+				font-size: 0.9em;
 			}
 			.last-updated-on {
 				font-style: italic;
+				color: var(--text-muted);
+				font-size: 0.85em;
+			}
+			.article-tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.4em;
+			}
+			.back-link {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.35em;
+				color: var(--text-muted);
+				font-size: 0.88em;
+				margin-bottom: 2em;
+				transition: var(--transition);
+			}
+			.back-link:hover {
+				color: var(--accent);
+			}
+			@media (max-width: 720px) {
+				.article-header h1 {
+					font-size: 1.75em;
+				}
 			}
 		</style>
 	</head>
@@ -63,19 +97,31 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
 				</div>
 				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
+					<a href="/blog" class="back-link">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+						Back to all posts
+					</a>
+					<div class="article-header">
+						<div class="article-meta">
+							<span class="date">
+								<FormattedDate date={pubDate} />
+							</span>
 							{
 								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
+									<span class="last-updated-on">
+										Updated <FormattedDate date={updatedDate} />
+									</span>
 								)
 							}
 						</div>
 						<h1>{title}</h1>
-						<hr />
+						{tags.length > 0 && (
+							<div class="article-tags">
+								{tags.map((tag: string) => (
+									<TagBadge tag={tag} />
+								))}
+							</div>
+						)}
 					</div>
 					<slot />
 				</div>

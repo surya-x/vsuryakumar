@@ -1,0 +1,56 @@
+---
+import { TAG_COLORS, DEFAULT_TAG_COLOR } from '../consts';
+
+interface Props {
+	tag: string;
+	size?: 'sm' | 'md';
+	linked?: boolean;
+}
+
+const { tag, size = 'sm', linked = true } = Astro.props;
+const colors = TAG_COLORS[tag] || DEFAULT_TAG_COLOR;
+---
+
+{linked ? (
+	<a
+		href={`/tags/${tag}`}
+		class:list={['tag-badge', size]}
+		style={`--tag-bg: ${colors.bg}; --tag-text: ${colors.text}; --tag-border: ${colors.border};`}
+	>
+		{tag}
+	</a>
+) : (
+	<span
+		class:list={['tag-badge', size]}
+		style={`--tag-bg: ${colors.bg}; --tag-text: ${colors.text}; --tag-border: ${colors.border};`}
+	>
+		{tag}
+	</span>
+)}
+
+<style>
+	.tag-badge {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.2em 0.65em;
+		border-radius: 999px;
+		background: var(--tag-bg);
+		color: var(--tag-text);
+		border: 1px solid var(--tag-border);
+		font-size: 0.78em;
+		font-weight: 500;
+		text-decoration: none;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+		font-family: var(--font-jetbrains);
+		letter-spacing: 0.01em;
+	}
+	a.tag-badge:hover {
+		filter: brightness(1.2);
+		transform: translateY(-1px);
+	}
+	.tag-badge.md {
+		padding: 0.3em 0.85em;
+		font-size: 0.85em;
+	}
+</style>

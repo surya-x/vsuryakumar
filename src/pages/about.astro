@@ -1,63 +1,160 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SOCIAL_LINKS } from '../consts';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="About — V Surya Kumar" description="Software Development Associate at Goldman Sachs. Writing about AI, Software Engineering, and Systems." />
+	</head>
+	<body>
+		<Header />
+		<main class="about-page">
+			<section class="about-hero">
+				<p class="about-label">About</p>
+				<h1>Hey, I'm <span class="gradient-text">V Surya Kumar</span></h1>
+				<p class="about-lead">
+					Software Development Associate at <strong>Goldman Sachs</strong>.
+					I'm passionate about building software at the intersection of
+					AI, distributed systems, and thoughtful engineering.
+				</p>
+			</section>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+			<section class="about-body">
+				<div class="about-section">
+					<h2>What I Do</h2>
+					<p>
+						By day, I build software systems at Goldman Sachs. Outside of work,
+						I dive deep into AI research, experiment with large language models,
+						build autonomous agents, and explore the low-level internals of
+						the systems that power modern computing.
+					</p>
+					<p>
+						This blog is where I document what I learn — breaking down complex
+						topics in AI, software engineering, and systems design into
+						clear, practical writing with real code.
+					</p>
+				</div>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+				<div class="about-section">
+					<h2>What I Write About</h2>
+					<div class="topics-grid">
+						<div class="topic-card">
+							<div class="topic-icon">🤖</div>
+							<h3>AI & Machine Learning</h3>
+							<p>LLMs, agents, inference engines, training pipelines, and everything in between.</p>
+						</div>
+						<div class="topic-card">
+							<div class="topic-icon">⚙️</div>
+							<h3>Software Engineering</h3>
+							<p>Architecture decisions, code quality, developer tools, and building things that last.</p>
+						</div>
+						<div class="topic-card">
+							<div class="topic-icon">🔧</div>
+							<h3>Systems Design</h3>
+							<p>Distributed systems, infrastructure, performance, and how things work under the hood.</p>
+						</div>
+					</div>
+				</div>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+				<div class="about-section">
+					<h2>Get in Touch</h2>
+					<p>
+						I'm always happy to connect. You can find me on
+						<a href={SOCIAL_LINKS.x} target="_blank" rel="noopener">X (Twitter)</a> and
+						<a href={SOCIAL_LINKS.github} target="_blank" rel="noopener">GitHub</a>,
+						or subscribe to the <a href="/rss.xml">RSS feed</a> to stay updated.
+					</p>
+				</div>
+			</section>
+		</main>
+		<Footer />
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+		<style>
+			.about-page {
+				max-width: 720px;
+			}
+			.about-hero {
+				padding: 2em 0 3em;
+				border-bottom: 1px solid var(--border);
+				margin-bottom: 3em;
+			}
+			.about-label {
+				color: var(--accent);
+				font-family: var(--font-jetbrains);
+				font-size: 0.88em;
+				margin-bottom: 0.75em;
+				letter-spacing: 0.02em;
+			}
+			.about-hero h1 {
+				font-size: 2.5em;
+				margin-bottom: 0.75em;
+				letter-spacing: -0.03em;
+			}
+			.about-lead {
+				font-size: 1.15em;
+				color: var(--text-secondary);
+				line-height: 1.75;
+				max-width: 600px;
+			}
+			.about-lead strong {
+				color: var(--text-primary);
+			}
+			.about-section {
+				margin-bottom: 3em;
+			}
+			.about-section h2 {
+				font-size: 1.35em;
+				margin-bottom: 1em;
+			}
+			.about-section p {
+				color: var(--text-secondary);
+				line-height: 1.8;
+			}
+
+			.topics-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+				gap: 1em;
+				margin-top: 1em;
+			}
+			.topic-card {
+				padding: 1.5em;
+				border-radius: var(--radius-lg);
+				border: 1px solid var(--border);
+				background: var(--bg-card);
+				transition: var(--transition);
+			}
+			.topic-card:hover {
+				border-color: var(--border-hover);
+				background: var(--gradient-card-hover);
+			}
+			.topic-icon {
+				font-size: 1.75em;
+				margin-bottom: 0.5em;
+			}
+			.topic-card h3 {
+				font-size: 1em;
+				margin-bottom: 0.5em;
+			}
+			.topic-card p {
+				font-size: 0.88em;
+				color: var(--text-muted);
+				margin: 0;
+				line-height: 1.55;
+			}
+
+			@media (max-width: 720px) {
+				.about-hero h1 {
+					font-size: 1.75em;
+				}
+				.topics-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</body>
+</html>

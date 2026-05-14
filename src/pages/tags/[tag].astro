@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import TagBadge from '../../components/TagBadge.astro';
+import { SITE_TITLE } from '../../consts';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	const tags = new Set<string>();
+	posts.forEach((post) => {
+		(post.data.tags || []).forEach((tag: string) => tags.add(tag));
+	});
+	return [...tags].map((tag) => ({
+		params: { tag },
+		props: {
+			posts: posts
+				.filter((p) => (p.data.tags || []).includes(tag))
+				.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+		},
+	}));
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`#${tag} — ${SITE_TITLE}`} description={`Posts tagged with ${tag}`} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="tag-header">
+				<a href="/tags" class="back-link">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+					All tags
+				</a>
+				<h1>Posts tagged <TagBadge tag={tag!} size="md" linked={false} /></h1>
+				<p class="tag-count">{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
+			</section>
+			<section class="posts-list">
+				{posts.map((post: any) => (
+					<a href={`/blog/${post.id}/`} class="post-row">
+						<div class="post-row-content">
+							<span class="post-date"><FormattedDate date={post.data.pubDate} /></span>
+							<h3 class="post-title">{post.data.title}</h3>
+							<p class="post-desc">{post.data.description}</p>
+						</div>
+					</a>
+				))}
+			</section>
+		</main>
+		<Footer />
+		<style>
+			main { max-width: 800px; }
+			.tag-header { padding: 2em 0 2.5em; border-bottom: 1px solid var(--border); margin-bottom: 2em; }
+			.back-link { display: inline-flex; align-items: center; gap: 0.35em; color: var(--text-muted); font-size: 0.88em; margin-bottom: 1.5em; text-decoration: none; transition: var(--transition); }
+			.back-link:hover { color: var(--accent); }
+			.tag-header h1 { font-size: 1.75em; margin-bottom: 0.35em; display: flex; align-items: center; gap: 0.5em; flex-wrap: wrap; }
+			.tag-count { color: var(--text-muted); font-size: 0.9em; }
+			.posts-list { display: flex; flex-direction: column; }
+			.post-row { display: block; padding: 1.5em 0; text-decoration: none; transition: var(--transition); border-bottom: 1px solid var(--border); }
+			.post-row:hover .post-title { color: var(--accent); }
+			.post-date { color: var(--text-muted); font-size: 0.82em; font-family: var(--font-jetbrains); }
+			.post-title { color: var(--text-primary); font-size: 1.15em; margin: 0.35em 0; line-height: 1.35; transition: var(--transition); }
+			.post-desc { color: var(--text-secondary); font-size: 0.9em; margin: 0; line-height: 1.5; }
+		</style>
+	</body>
+</html>
